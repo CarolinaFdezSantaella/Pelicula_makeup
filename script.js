@@ -4,6 +4,7 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 const TRENDING_URL = `${BASE_URL}/trending/movie/day?language=es-ES`;
 const SEARCH_URL = `${BASE_URL}/search/multi?language=es-ES`;
 const IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
+const PLACEHOLDER_IMAGE = 'https://via.placeholder.com/500x750?text=Sin+Imagen';
 
 const container = document.getElementById('trending-container');
 const searchResultsContainer = document.getElementById('search-results-container');
@@ -115,7 +116,7 @@ function showSearchResults(results) {
         // Si no hay póster, usar imagen placeholder
         const posterUrl = poster_path 
             ? IMAGE_URL + poster_path 
-            : 'https://via.placeholder.com/500x750?text=Sin+Imagen';
+            : PLACEHOLDER_IMAGE;
         
         // Calcular porcentaje
         const percent = Math.round(vote_average * 10);
@@ -132,7 +133,9 @@ function showSearchResults(results) {
         let dateStr = 'Sin fecha';
         if (release_date) {
             const dateObj = new Date(release_date);
-            dateStr = dateObj.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+            if (!isNaN(dateObj.getTime())) {
+                dateStr = dateObj.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+            }
         }
         
         // Etiqueta de tipo (Película o Serie)
