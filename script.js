@@ -206,10 +206,18 @@ function renderDetail(detail, credits, mediaType) {
     const releaseDate = detail.release_date || detail.first_air_date;
     const year = releaseDate ? new Date(releaseDate).getFullYear() : '';
     const genres = detail.genres ? detail.genres.map(g => g.name).join(', ') : '';
-    const runtime = detail.runtime || (detail.episode_run_time && detail.episode_run_time[0]) || 0;
+    
+    // Calcular duración (películas usan runtime, series usan episode_run_time)
+    let runtime = 0;
+    if (mediaType === 'movie') {
+        runtime = detail.runtime || 0;
+    } else if (detail.episode_run_time && detail.episode_run_time.length > 0) {
+        runtime = detail.episode_run_time[0];
+    }
     const hours = Math.floor(runtime / 60);
     const minutes = runtime % 60;
     const runtimeStr = runtime ? `${hours}h ${minutes}m` : '';
+    
     const percent = Math.round((detail.vote_average || 0) * 10);
     const posterUrl = detail.poster_path ? IMAGE_URL + detail.poster_path : PLACEHOLDER_IMAGE;
     const backdropUrl = detail.backdrop_path ? IMAGE_URL_ORIGINAL + detail.backdrop_path : '';
@@ -222,13 +230,19 @@ function renderDetail(detail, credits, mediaType) {
     // Obtener director/creador
     let creators = [];
     if (mediaType === 'movie') {
-        creators = credits.crew ? credits.crew.filter(c => c.job === 'Director').slice(0, 3) : [];
+        // Incluir Director y Co-Director
+        creators = credits.crew ? credits.crew.filter(c => 
+            c.job === 'Director' || c.job === 'Co-Director'
+        ).slice(0, 3) : [];
     } else {
         creators = detail.created_by ? detail.created_by.slice(0, 3) : [];
     }
     
-    // Obtener escritores principales
-    const writers = credits.crew ? credits.crew.filter(c => c.job === 'Writer' || c.job === 'Screenplay').slice(0, 2) : [];
+    // Obtener escritores principales (incluir varios tipos de créditos de escritura)
+    const writingJobs = ['Writer', 'Screenplay', 'Story', 'Novel', 'Original Story'];
+    const writers = credits.crew ? credits.crew.filter(c => 
+        writingJobs.includes(c.job)
+    ).slice(0, 2) : [];
     
     // Combinar crew para mostrar
     const crewToShow = [...creators.map(c => ({ name: c.name, job: mediaType === 'movie' ? 'Director' : 'Creador' })), 
@@ -296,24 +310,25 @@ function renderDetail(detail, credits, mediaType) {
     `;
 }
 
-// Cerrar modal
-closeModal.addEventListener('click', () => {
+// Función auxiliar para cerrar el modal
+function closeModalHandler() {
     modal.style.display = 'none';
-    document.body.style.overflow = 'auto';
-});
+    document.body.style.overflow = '';
+}
+
+// Cerrar modal
+closeModal.addEventListener('click', closeModalHandler);
 
 // Cerrar modal al hacer clic fuera del contenido
 modal.addEventListener('click', (e) => {
     if (e.target === modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        closeModalHandler();
     }
 });
 
 // Cerrar modal con tecla Escape
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal.style.display === 'block') {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        closeModalHandler();
     }
 });
