@@ -3,71 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MovieDatabase - Tu Base de Datos de Películas</title>
+    <title>TMDB Clone - Inicio</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>🎬 MovieDatabase</h1>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Inicio</a></li>
-                    <li><a href="#populares">Populares</a></li>
-                    <li><a href="#estrenos">Estrenos</a></li>
-                    <li><a href="#favoritos">Favoritos</a></li>
+
+    <nav class="navbar">
+        <div class="nav-wrapper">
+            <div class="nav-left">
+                <a href="#" class="nav-logo">TMDB</a>
+                <ul class="nav-links">
+                    <li><a href="#">Películas</a></li>
+                    <li><a href="#">Series</a></li>
+                    <li><a href="#">Gente</a></li>
+                    <li><a href="#">Más</a></li>
                 </ul>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h2>Descubre las Mejores Películas</h2>
-                <p>Explora nuestra amplia colección de películas, encuentra información detallada y guarda tus favoritas.</p>
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Buscar películas...">
-                    <button id="searchBtn">Buscar</button>
-                </div>
             </div>
-        </section>
-
-        <section id="populares" class="movies-section">
-            <div class="container">
-                <h3>Películas Populares</h3>
-                <div id="movieGrid" class="movie-grid">
-                    <!-- Las películas se cargarán dinámicamente -->
-                </div>
-            </div>
-        </section>
-
-        <section id="estrenos" class="movies-section">
-            <div class="container">
-                <h3>Próximos Estrenos</h3>
-                <div id="upcomingGrid" class="movie-grid">
-                    <!-- Los estrenos se cargarán dinámicamente -->
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Modal para detalles de película -->
-    <div id="movieModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="modalBody">
-                <!-- Contenido del modal -->
+            <div class="nav-right">
+                <i class="fas fa-plus"></i>
+                <div class="lang-box">ES</div>
+                <a href="#">Iniciar sesión</a>
+                <a href="#">Únete a TMDB</a>
+                <i class="fas fa-search search-icon-nav"></i>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 MovieDatabase. Todos los derechos reservados.</p>
-            <p>Datos proporcionados por <a href="https://www.themoviedb.org/" target="_blank">TMDB</a></p>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Te damos la bienvenida.</h1>
+            <h3>Millones de películas, series y gente por descubrir. Explora ya.</h3>
+            
+            <div class="search-box">
+                <form id="search-form">
+                    <input type="text" id="search-input" placeholder="Buscar una película, serie, persona......">
+                    <button type="submit">Buscar</button>
+                </form>
+            </div>
         </div>
-    </footer>
+    </section>
+
+    <section class="trending-section">
+        <div class="section-header">
+            <h2>Tendencias</h2>
+            <div class="toggle-selector">
+                <div class="toggle-item active">Hoy</div>
+                <div class="toggle-item">Esta semana</div>
+            </div>
+        </div>
+
+        <div id="trending-container" class="scroller">
+            </div>
+    </section>
 
     <script src="script.js"></script>
 </body>
