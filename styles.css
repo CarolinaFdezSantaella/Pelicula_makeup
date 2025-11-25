@@ -267,3 +267,46 @@ body {
     color: rgba(0,0,0,0.6);
     margin-top: 4px;
 }
+
+/* --- Sección de Resultados de Búsqueda --- */
+.search-results-section {
+    max-width: 1300px;
+    margin: 30px auto;
+    padding: 0 40px;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 30px 20px;
+}
+
+.results-grid .card {
+    position: relative;
+}
+
+.media-type-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+.media-type-badge.movie {
+    background-color: var(--tmdb-light-blue);
+}
+
+.media-type-badge.tv {
+    background-color: #9c27b0;
+}
+
+.no-results {
+    font-size: 1.1rem;
+    color: rgba(0,0,0,0.6);
+    text-align: center;
+    padding: 40px;
+}
